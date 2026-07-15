@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project was built using an **orchestrated, multi-agent workflow** rather than a single prompt-to-code request. An open-source agent framework (Hermes Agent) was used to define the plan and delegate roles, and several different AI models were then assigned distinct responsibilities — architect, developer, and independent security auditors — with their outputs fed into one another in a structured pipeline. The goal was not just to generate working PHP code, but to demonstrate how multiple agents, each with a different job, can collaborate, challenge each other's work, and converge on a more secure result than any single pass would produce.
+This project was built using an **orchestrated, multi-agent workflow** rather than a single prompt-to-code request. An open-source agent framework (Hermes Agent) was used to define the plan and delegate roles, and several different AI models were then assigned distinct responsibilities with their outputs fed into one another in a structured pipeline. The goal was not just to generate working PHP code, but to demonstrate how multiple agents, each with a different job, can collaborate, challenge each other's work, and converge on a more secure result than any single pass would produce.
 
 ## Tooling: Standing Up Hermes Agent
 
@@ -13,10 +13,10 @@ Rather than using the hosted Nous Portal (which required billing), Hermes was co
 - Ran the installer's setup wizard and selected the "Full setup" path instead of the default hosted-portal option
 - Kept the terminal backend local and skipped the messaging/gateway integration (Telegram/Discord), since neither was needed for this task
 - Added a custom OpenAI-compatible provider pointed at Groq's endpoint (`https://api.groq.com/openai/v1`), authenticated with a personal Groq API key
-- Hit a `413 Request too large` error on the first run — Groq's free-tier token-per-minute limit (8,000 TPM) couldn't handle the large `AGENTS.md` context file Hermes was attaching automatically
+- Hit a `413 Request too large` error on the first run (Groq's free-tier token-per-minute limit (8,000 TPM) couldn't handle the large `AGENTS.md` context file Hermes was attaching automatically)
 - Worked around this by switching providers to Hugging Face's inference router and selecting a coding-oriented model (`Qwen/Qwen3-Coder-Next`) instead of the larger, context-hungry model that had triggered the rate limit
 
-With Hermes running locally against a live model, it was used as the **first agent in the pipeline** — the architect/orchestrator that produced the initial project plan.
+With Hermes running locally against a live model, it was used as the **first agent in the pipeline** the architect/orchestrator that produced the initial project plan.
 
 ## The Workflow
 
@@ -45,7 +45,7 @@ With Hermes running locally against a live model, it was used as the **first age
    Release-Ready Codebase
 ```
 
-Each stage had a distinct job, and each agent only saw the output of the previous stage — mimicking how a real engineering team hands work between an architect, a builder, and independent reviewers.
+Each stage had a distinct job, and each agent only saw the output of the previous stage, mimicking how a real engineering team hands work between an architect, a builder, and independent reviewers.
 
 ## Stage 1 — Architecture (Hermes Agent)
 
@@ -57,7 +57,7 @@ Hermes's plan was handed to Gemini with instructions to act as the lead develope
 
 ## Stage 3 — Independent Security Review
 
-Rather than accepting the first version at face value, the code was handed to a **separate agent acting purely as an auditor** — with no knowledge of the design intent, only the code itself. This produced a structured vulnerability list, including:
+Rather than accepting the first version at face value, the code was handed to a **separate agent acting purely as an auditor** with no knowledge of the design intent, only the code itself. This produced a structured vulnerability list, including:
 
 - User enumeration via differing registration messages
 - Uncaught database exceptions leaking internal errors
@@ -92,7 +92,7 @@ A third-party model, DeepSeek, was brought in for a **final, adversarial audit**
 
 ## Stage 8 — Triage Against Ground Truth
 
-Rather than blindly implementing all 16 findings, the report was triaged **against the actual code**, not just the audit's prose — a step that matters because a single-pass auditor working from a diff or summary can flag things that don't hold up once you check the real call graph. For example:
+Rather than blindly implementing all 16 findings, the report was triaged **against the actual code**, not just the audit's prose, which matters because a single-pass auditor working from a diff or summary can flag things that don't hold up once you check the real call graph. For example:
 
 | Finding | Verdict |
 |---|---|
@@ -116,12 +116,12 @@ The confirmed, real issues were implemented as targeted diffs:
 
 ## Repository Organization
 
-The finished application was published as its **own standalone repository**, separate from the Hermes Agent installation used to run the architect stage. Hermes is the toolchain — comparable to an IDE or CLI — while the secure login page is the deliverable the assignment actually asked for, so the two were kept apart:
+The finished application was published as its **own standalone repository**, separate from the Hermes Agent installation used to run the architect stage. Hermes is the toolchain (comparable to an IDE or CLI) while the secure login page is the deliverable the assignment actually asked for, so the two were kept apart:
 
 - `hermes-agent` — the agent framework itself, left as-is
 - `secure-php-login` — the standalone PHP application, with its own `README.md` documenting the multi-agent workflow, the security features implemented, and the roles each agent played
 
-No local Hermes configuration, `.env` files, or API keys were included in the application repository — only the PHP source, schema, and documentation of the process.
+No local Hermes configuration, `.env` files, or API keys were included in the application repository, only the PHP source, schema, and documentation of the process.
 
 ## Why This Approach
 
