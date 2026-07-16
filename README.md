@@ -3,19 +3,21 @@
 A PHP + MySQL authentication system (login, registration, session-protected dashboard) built as a practical demonstration of common web auth security controls: hashed passwords, CSRF protection, prepared statements, rate limiting, timing-attack mitigation, and audit logging.
 
 ## Security Features
-
-- **Password hashing** via `password_hash()` / `password_verify()` (bcrypt)
-- **Timing-attack mitigation** — a dummy `password_verify()` call always runs, even when no matching account exists, so login response time doesn't leak whether a username is valid
-- **CSRF protection** — per-session tokens checked with `hash_equals()` on every state-changing POST (login, register, logout)
-- **SQL injection protection** — all queries use PDO prepared statements
-- **XSS protection** — all dynamic output passed through a shared `h()` escaping helper
-- **Session security** — `httponly`, `strict`-mode, `SameSite=Strict` cookies, ID regeneration on login, idle timeout, and full session teardown (destroy + cookie expiry + regenerate) on logout
-- **Account + IP rate limiting** — separate thresholds for repeated failures against a single account vs. a single IP, so one doesn't unfairly lock out the other (e.g. a NAT full of users behind one IP)
-- **Registration throttling** — a separate per-IP limit on registration attempts
-- **Enumeration resistance** — registration returns an identical message whether the account was created or already existed; disabled accounts fail login with the same generic error as a wrong password
-- **Account status** — a `status` (`active`/`disabled`) column lets an account be deactivated without deleting it
-- **Security headers & CSP** — `X-Frame-Options`, `X-Content-Type-Options`, a restrictive `Content-Security-Policy`, HSTS (when served over HTTPS), and cache-control headers to stop sensitive pages being cached
-- **Audit logging** — logins, failures, lockouts, registrations, and logouts are all recorded to an `audit_log` table
+ 
+| Feature | Details |
+|---|---|
+| **Password hashing** | Via `password_hash()` / `password_verify()` (bcrypt) |
+| **Timing-attack mitigation** | A dummy `password_verify()` call always runs, even when no matching account exists, so login response time doesn't leak whether a username is valid |
+| **CSRF protection** | Per-session tokens checked with `hash_equals()` on every state-changing POST (login, register, logout) |
+| **SQL injection protection** | All queries use PDO prepared statements |
+| **XSS protection** | All dynamic output passed through a shared `h()` escaping helper |
+| **Session security** | `httponly`, `strict`-mode, `SameSite=Strict` cookies, ID regeneration on login, idle timeout, and full session teardown (destroy + cookie expiry + regenerate) on logout |
+| **Account + IP rate limiting** | Separate thresholds for repeated failures against a single account vs. a single IP, so one doesn't unfairly lock out the other (e.g. a NAT full of users behind one IP) |
+| **Registration throttling** | A separate per-IP limit on registration attempts |
+| **Enumeration resistance** | Registration returns an identical message whether the account was created or already existed; disabled accounts fail login with the same generic error as a wrong password |
+| **Account status** | A `status` (`active`/`disabled`) column lets an account be deactivated without deleting it |
+| **Security headers & CSP** | `X-Frame-Options`, `X-Content-Type-Options`, a restrictive `Content-Security-Policy`, HSTS (when served over HTTPS), and cache-control headers to stop sensitive pages being cached |
+| **Audit logging** | Logins, failures, lockouts, registrations, and logouts are all recorded to an `audit_log` table |
 
 ## Requirements
 
