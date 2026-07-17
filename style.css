@@ -1,0 +1,377 @@
+/* ==========================================================================
+   Auth pages shared styles (login + register + dashboard)
+   Loaded as an external stylesheet so it complies with the app's CSP
+   (style-src 'self' — inline <style> blocks would be blocked by browsers
+   that enforce that policy).
+   ========================================================================== */
+
+:root {
+    --bg-a: #eef1fb;
+    --bg-b: #dde3f6;
+    --card-bg: #ffffff;
+    --ink: #1a1f36;
+    --muted: #6b7280;
+    --border: #e2e6f2;
+    --accent: #4338ca;
+    --accent-hover: #372fa8;
+    --accent-soft: #7c6fe0;
+    --ring: rgba(67, 56, 202, 0.16);
+    --success: #059669;
+    --danger: #dc2626;
+    --warning: #f59e0b;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, system-ui, sans-serif;
+    color: var(--ink);
+    background: radial-gradient(circle at 15% 10%, var(--bg-a) 0%, var(--bg-b) 55%, #d3d9f2 100%);
+}
+
+.auth-shell {
+    width: 100%;
+    max-width: 440px;
+}
+
+/* Brand mark */
+.brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 26px;
+}
+
+.brand-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+    box-shadow: 0 12px 26px rgba(67, 56, 202, 0.34);
+}
+
+.eyebrow {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+/* Card */
+.card {
+    position: relative;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 38px 36px;
+    box-shadow: 0 24px 55px rgba(30, 41, 90, 0.10), 0 2px 8px rgba(30, 41, 90, 0.05);
+    overflow: hidden;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-soft), var(--accent));
+}
+
+.title {
+    margin: 0 0 6px;
+    font-size: 25px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    text-align: center;
+}
+
+.subtitle {
+    margin: 0 0 28px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--muted);
+    text-align: center;
+}
+
+/* Form elements */
+label {
+    display: block;
+    margin-top: 18px;
+    margin-bottom: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+}
+
+.field {
+    position: relative;
+}
+
+.field svg {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #a3aac2;
+    pointer-events: none;
+    transition: color 0.15s ease;
+}
+
+.field:focus-within svg { color: var(--accent); }
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px 14px 12px 42px;
+    font-size: 14px;
+    color: var(--ink);
+    background: #fbfbfe;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: #fff;
+    box-shadow: 0 0 0 4px var(--ring);
+}
+
+button.submit {
+    width: 100%;
+    margin-top: 26px;
+    padding: 13px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    background: var(--accent);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.05s ease;
+}
+
+button.submit:hover { background: var(--accent-hover); }
+button.submit:active { transform: translateY(1px); }
+
+/* Alerts */
+.alert {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    border-radius: 10px;
+}
+
+.alert-error   { color: #991b1b; background: #fef2f2; border: 1px solid #fecaca; }
+.alert-success { color: #065f46; background: #ecfdf5; border: 1px solid #a7f3d0; }
+.alert-info    { color: #1e40af; background: #eff6ff; border: 1px solid #bfdbfe; }
+
+.alert svg { flex: 0 0 16px; margin-top: 2px; position: static; }
+
+/* Footer link */
+.foot-note {
+    margin-top: 24px;
+    font-size: 13.5px;
+    text-align: center;
+    color: var(--muted);
+}
+
+.foot-note a {
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.foot-note a:hover { text-decoration: underline; }
+
+/* ==========================================================================
+   Popouts (email + password) — hidden by default, slide open only while
+   the field is focused / being typed into.
+   ========================================================================== */
+
+.popout {
+    max-height: 0;
+    margin-top: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.28s ease, opacity 0.2s ease, margin-top 0.28s ease;
+}
+
+.popout.active {
+    max-height: 240px;
+    margin-top: 10px;
+    opacity: 1;
+}
+
+.popout-inner {
+    position: relative;
+    padding: 12px 14px;
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+
+.popout-inner::before {
+    content: "";
+    position: absolute;
+    top: -6px;
+    left: 20px;
+    width: 11px;
+    height: 11px;
+    background: #f8fafc;
+    border-left: 1px solid var(--border);
+    border-top: 1px solid var(--border);
+    transform: rotate(45deg);
+}
+
+.popout-label {
+    margin-bottom: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+}
+
+/* Password strength bar lives inside the password popout */
+.pw-progress {
+    height: 4px;
+    margin-bottom: 12px;
+    background: #e5e9f5;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.pw-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--warning), var(--success));
+    transition: width 0.25s ease;
+}
+
+.requirement-list {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.requirement-list li {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 13px;
+    color: var(--muted);
+    transition: color 0.15s ease;
+}
+
+.requirement-list li.met { color: var(--ink); }
+
+.req-check {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 18px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--warning);
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.req-check svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.req-check .icon-warn { opacity: 1; }
+.req-check .icon-check { opacity: 0; transform: translate(-50%, -50%) scale(0.4); }
+
+.requirement-list li.met .req-check {
+    background: var(--success);
+    box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
+}
+
+.requirement-list li.met .req-check .icon-warn {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.4);
+}
+
+.requirement-list li.met .req-check .icon-check {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+@media (max-width: 480px) {
+    .card { padding: 30px 24px; }
+}
+
+/* ==========================================================================
+   Dashboard page
+   ========================================================================== */
+
+.dashboard-shell {
+    width: 100%;
+    max-width: 600px;
+}
+
+.dashboard-greeting {
+    margin: 0 0 8px;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.dashboard-note {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--muted);
+}
+
+.divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 24px 0;
+}
+
+button.btn-logout {
+    width: auto;
+    margin-top: 0;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    background: var(--danger);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.05s ease;
+}
+
+button.btn-logout:hover { background: #b91c1c; }
+button.btn-logout:active { transform: translateY(1px); }
